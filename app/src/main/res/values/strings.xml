@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">MMFL5</string>
+    <string name="action_settings">Operation enabled</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="a_number">a</string>
+    <string name="b_number">b</string>
+    <string name="c_number">c</string>
+    <string name="d_number">d</string>
+    <string name="buildGraph">Build Graph</string>
+
+    <string name="error_field_is_empty">Field is empty</string>
+    <string name="error_incorrect_constraints">Incorrect Constraints</string>
+
+    <!--Functions-->
+    <string name="function_difference_sigmoid">Difference Sigmoid</string>
+    <string name="function_generalized">Generalized</string>
+    <string name="function_pi_look">PiLookAlike</string>
+    <string name="function_product_sigmoid">Product Sigmoid</string>
+    <string name="function_sigmoid">Sigmoid</string>
+    <string name="function_s_look">SLookAlike</string>
+    <string name="function_square">Square</string>
+    <string name="function_symmetric_gauss">Symmetric Gauss</string>
+    <string name="function_trapezoid">Trapezoid</string>
+    <string name="function_triangular">Triangular</string>
+    <string name="function_two_side_gauss">TwoSideGauss</string>
+    <string name="function_z_look">ZLookAlike</string>
+    <string name="function_laplass">Laplass</string>
+
+    <string name="operation_enabler">Operation enabled</string>
+    <string name="operation_not_enabler">Operation not enabled</string>
+
+    <!--Default values-->
+    <string name="def_a">0</string>
+    <string name="def_b">3</string>
+    <string name="def_c">5</string>
+    <string name="def_d">6</string>
+    <string name="def_b_a">1</string>
+    <string name="def_b_b">4</string>
+    <string name="def_b_c">6</string>
+    <string name="def_b_d">7</string>
+    <string name="def_steps">10</string>
+
+    <!--Operations-->
+    <string name="operation">Operations</string>
+    <string name="operation_add">Adding</string>
+    <string name="operation_subtract">Subtracting</string>
+    <string name="operation_multiply">Multiplying</string>
+    <string name="operation_divide">Dividing</string>
+    <string name="operation_maximum">Maximum</string>
+    <string name="operation_minimum">Minimum</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="rounded">Rounded</string>
+    <string name="full_result">Full Result</string>
+    <string name="steps">Input Steps</string>
+
+    <string name="find">Find</string>
+    <string name="find_x">Find X</string>
+    <string name="find_mx">Find m(x)</string>
+    <string name="m_a_x">mA(x)= </string>
+    <string name="m_b_x">mB(x)= </string>
+    <string name="m_c_x">mC(x)= </string>
+    <string name="x_a">Xa= </string>
+    <string name="x_b">Xb= </string>
+    <string name="x_c">Xc= </string>
+    <string name="none">NoN</string>
+    <string name="title">x m(x)</string>
+
+
+</resources>

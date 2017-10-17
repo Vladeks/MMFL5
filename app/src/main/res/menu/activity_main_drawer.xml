@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group>
+        <item android:id="@+id/nav_operation"
+              app:actionLayout="@layout/view_operation_selection"
+                android:title="@string/operation"/>
+
+        <item android:id="@+id/nav_rounded"
+              app:actionLayout="@layout/view_switch"
+              android:title="@string/rounded" />
+
+        <item android:id="@+id/nav_steps"
+              app:actionLayout="@layout/view_input_step"
+              android:title="@string/steps" />
+
+        <item android:id="@+id/nav_find"
+              app:actionLayout="@layout/view_find_x"
+              android:title="@string/steps" />
+
+    </group>
+
+</menu>

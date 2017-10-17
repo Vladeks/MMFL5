@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center" android:id="@+id/view_four_number">
+
+    <TextView
+            android:text="@string/a_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etAnumber" android:textAlignment="center" android:text="@string/def_a"/>
+    <TextView
+            android:text="@string/b_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/appbar_padding_top"
+            android:id="@+id/textView2" android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etBnumber" android:textAlignment="center" android:text="@string/def_b"/>
+    <TextView
+            android:text="@string/c_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/appbar_padding_top"
+            android:id="@+id/textView3" android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etCnumber" android:textAlignment="center" android:text="@string/def_c"/>
+    <TextView
+            android:text="@string/d_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/appbar_padding_top"
+            android:id="@+id/textView4" android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etDnumber" android:textAlignment="center" android:text="@string/def_d"/>
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center" android:id="@+id/view_three_number">
+
+    <TextView
+            android:text="@string/a_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etAnumTtree" android:textAlignment="center" android:text="@string/def_a"/>
+    <TextView
+            android:text="@string/b_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:id="@+id/textView2" android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etBnumTtree" android:textAlignment="center" android:text="@string/def_b"/>
+    <TextView
+            android:text="@string/c_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:id="@+id/textView3" android:textSize="24sp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="3"
+            android:id="@+id/etCnumTree" android:textAlignment="center" android:text="@string/def_c"/>
+</LinearLayout>

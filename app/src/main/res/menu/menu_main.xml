@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.lenovo.mmfl5.MainActivity">
+
+    <item android:id="@+id/nav_switch"
+          app:actionLayout="@layout/action_view_switch"
+          android:orderInCategory="100"
+          android:title="@string/action_settings"
+          app:showAsAction="ifRoom"/>
+</menu>
