@@ -18,6 +18,17 @@
               app:actionLayout="@layout/view_find_x"
               android:title="@string/steps" />
 
+        <item android:id="@+id/nav_distance"
+              app:actionLayout="@layout/action_view_swich_distance"
+              android:title="@string/distance"/>
+
+        <item android:id="@+id/nav_fuzzy_index"
+              app:actionLayout="@layout/action_view_swich_fuzzy_index"
+              android:title="@string/fuzzy_index"/>
+
+        <item android:id="@+id/nav_entrophy"
+              app:actionLayout="@layout/acton_view_swich_entrophy"
+              android:title="@string/entrophy"/>
     </group>
 
 </menu>

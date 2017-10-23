@@ -1,9 +1,7 @@
 package com.example.lenovo.mmfl5;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -78,7 +76,10 @@ public class MainActivity
     private GraphView graph;
 
     private SwitchCompat switcherOperation;
+    private SwitchCompat switcherDistance;
     private SwitchCompat switcherRounded;
+    private SwitchCompat switcherFuzzyIndex;
+    private SwitchCompat switcherEntrophy;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -170,10 +171,30 @@ public class MainActivity
                         return;
                     }
                     graph.removeAllSeries();
-                    drawGraph(graph, fun);
-                    Snackbar.make(view, "Build", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
+
+                    DataPoint[] dpFun = calculateFunctionPoints(fun);
+                    Distance distance = new Distance(dpFun);
+                    View headerLayout = navigationView.getHeaderView(0);
+                    TextView result = headerLayout.findViewById(R.id.result);
+
+
+                    if(switcherFuzzyIndex.isChecked()) {
+                        double line = distance.calculateLineFuzzyIndex();
+                        double square = distance.calculateSquareFuzzyIndex();
+
+                        result.setText(getString(R.string.fuzzy_index_line) + " " + String.valueOf(line) + "\n"
+                                + getString(R.string.fuzzy_index_square)  + " " + String.valueOf(square)
+                        );
+                        drawGraph(graph, dpFun, distance.affilationArray, getString(R.string.number));
+                    } else if(switcherEntrophy.isChecked()) {
+                        result.setText(getString(R.string.fuzzy_index_line) + " " + String.valueOf(distance.calculateEntropy())
+                        );
+                        drawGraph(graph, dpFun, distance.entrophyH, distance.entrophyPi, getString(R.string.entrophy_h), getString(R.string.entrophy_pi));
+                    } else {
+                        drawGraph(graph, fun);
+                    }
+
+                }  else {
                     AffiliationFunction funA = getFunction(view);
                     AffiliationFunction funB = getFunctionB(view);
                     if(funA == null || funB == null) {
@@ -209,10 +230,32 @@ public class MainActivity
                         dpC = operation.execute(funA, funB, step);
                         Log.d(TAG_OPERATION, Arrays.toString(operation.execute(funA, funB, step)));
                     }
-                    drawGraph(graph, dpA, dpB, dpC);
-                    initButtonSheet(dpC);
 
-                    //Snackbar.make(view, "Operation", Snackbar.LENGTH_LONG).show();
+
+                    //test
+                    if(switcherDistance.isChecked()) {
+                        Distance distance = new Distance(dpA, dpB);
+
+                        View headerLayout = navigationView.getHeaderView(0);
+                        TextView result = headerLayout.findViewById(R.id.result);
+
+                        double heming = distance.calculateHemingDistance();
+                        double euklid = distance.calculateEuclidDistance();
+
+                        result.setText(getString(R.string.line_heming_distance) + " " + String.valueOf(heming) + "\n"
+                                + getString(R.string.sqare_evklid_distance)  + " " + String.valueOf(euklid)
+                        );
+
+                        drawGraph(graph, dpA, dpB,  distance.resultHeming, distance.resultEuclid);
+
+                    } else {
+                        // draw calculate function
+                        drawGraph(graph, dpA, dpB, dpC, "B", "Result");
+                        initButtonSheet(dpC);
+                    }
+
+
+
                 }
 
             }
@@ -242,6 +285,18 @@ public class MainActivity
         MenuItem menuItemStep = menu.findItem(R.id.nav_steps);
         View actionViewStep = MenuItemCompat.getActionView(menuItemStep);
         etSteps = (EditText) actionViewStep.findViewById(R.id.etSteps);
+
+        MenuItem menuItemDistance= menu.findItem(R.id.nav_distance);
+        View actionViewDistance = MenuItemCompat.getActionView(menuItemDistance);
+        switcherDistance = (SwitchCompat) actionViewDistance.findViewById(R.id.switcherDistance);
+
+        MenuItem menuItemFuzyIndex = menu.findItem(R.id.nav_fuzzy_index);
+        View actionViewFuzyIndex = MenuItemCompat.getActionView(menuItemFuzyIndex);
+        switcherFuzzyIndex = (SwitchCompat) actionViewFuzyIndex.findViewById(R.id.switcherFuzzyIndex);
+
+        MenuItem menuItemEntrophy= menu.findItem(R.id.nav_entrophy);
+        View actionViewEntrophy = MenuItemCompat.getActionView(menuItemEntrophy);
+        switcherEntrophy = (SwitchCompat) actionViewEntrophy.findViewById(R.id.switcherEntrophy);
 
         MenuItem menuItemOperation = menu.findItem(R.id.nav_operation);
         View actionViewOperation = MenuItemCompat.getActionView(menuItemOperation);
@@ -800,12 +855,46 @@ public class MainActivity
 
         DataPoint[] data = calculateFunctionPoints(function);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+        System.out.println(Arrays.toString(data));
         series.setThickness(10);
         graph.addSeries(series);
 
     }
 
-    private void drawGraph(GraphView graph, DataPoint[] functionA, DataPoint[] functionB, DataPoint[] functionC) {
+    private void drawGraph(GraphView graph, DataPoint[] functionA, DataPoint[] functionB, DataPoint[] functionC, String titleB, String titleResult) {
+        System.out.println("Draw Operation");
+        graph.removeAllSeries();
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxY(1.1);
+        graph.getViewport().setMinY(-0.3);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(20);
+        graph.getViewport().setMinX(0);
+
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScrollable(true);
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        LineGraphSeries<DataPoint> seriesA = new LineGraphSeries<>(functionA);
+        seriesA.setColor(Color.GREEN);
+        seriesA.setTitle("A");
+        LineGraphSeries<DataPoint> seriesB = new LineGraphSeries<>(functionB);
+        seriesB.setColor(Color.BLUE);
+        seriesB.setTitle(titleB);
+        LineGraphSeries<DataPoint> seriesC = new LineGraphSeries<>(functionC);
+        seriesC.setColor(Color.RED);
+        seriesC.setTitle(titleResult);
+
+        graph.addSeries(seriesA);
+        graph.addSeries(seriesB);
+        graph.addSeries(seriesC);
+
+    }
+
+    private void drawGraph(GraphView graph, DataPoint[] functionA, DataPoint[] functionB, DataPoint[] heming, DataPoint[] euclid) {
         System.out.println("Draw Operation");
         graph.removeAllSeries();
         graph.getViewport().setYAxisBoundsManual(true);
@@ -828,13 +917,46 @@ public class MainActivity
         LineGraphSeries<DataPoint> seriesB = new LineGraphSeries<>(functionB);
         seriesB.setColor(Color.BLUE);
         seriesB.setTitle("B");
-        LineGraphSeries<DataPoint> seriesC = new LineGraphSeries<>(functionC);
+        LineGraphSeries<DataPoint> seriesC = new LineGraphSeries<>(heming);
         seriesC.setColor(Color.RED);
-        seriesC.setTitle("Result");
+        seriesC.setTitle(getString(R.string.line_heming_distance));
+        LineGraphSeries<DataPoint> seriesD = new LineGraphSeries<>(euclid);
+        seriesD.setColor(Color.MAGENTA);
+        seriesD.setTitle(getString(R.string.sqare_evklid_distance));
 
         graph.addSeries(seriesA);
         graph.addSeries(seriesB);
         graph.addSeries(seriesC);
+        graph.addSeries(seriesD);
+
+    }
+
+    private void drawGraph(GraphView graph, DataPoint[] functionA, DataPoint[] functionB, String titleB) {
+        System.out.println("Draw Operation");
+        graph.removeAllSeries();
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxY(1.2);
+        graph.getViewport().setMinY(-0.1);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(20);
+        graph.getViewport().setMinX(0);
+
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScrollable(true);
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        LineGraphSeries<DataPoint> seriesA = new LineGraphSeries<>(functionA);
+        seriesA.setColor(Color.GREEN);
+        seriesA.setTitle("A");
+        LineGraphSeries<DataPoint> seriesB = new LineGraphSeries<>(functionB);
+        seriesB.setColor(Color.RED);
+        seriesB.setTitle(titleB);
+
+        graph.addSeries(seriesA);
+        graph.addSeries(seriesB);
 
     }
 
@@ -946,6 +1068,7 @@ public class MainActivity
         View actionView = MenuItemCompat.getActionView(menuItem);
 
         switcherOperation = (SwitchCompat) actionView.findViewById(R.id.switcher);
+
         switcherOperation.setChecked(false);
         switcherOperation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -964,9 +1087,7 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -981,8 +1102,6 @@ public class MainActivity
             Snackbar.make(frameLayoutB, (switcherOperation.isChecked()) ? R.string.operation_enabler :
                     R.string.operation_not_enabler, Snackbar.LENGTH_SHORT).show();
 
-//            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//            drawer.closeDrawer(GravityCompat.START);
             return true;
         }
 

@@ -31,7 +31,7 @@
     <string name="operation_not_enabler">Operation not enabled</string>
 
     <!--Default values-->
-    <string name="def_a">0</string>
+    <string name="def_a">1</string>
     <string name="def_b">3</string>
     <string name="def_c">5</string>
     <string name="def_d">6</string>
@@ -39,7 +39,7 @@
     <string name="def_b_b">4</string>
     <string name="def_b_c">6</string>
     <string name="def_b_d">7</string>
-    <string name="def_steps">10</string>
+    <string name="def_steps">64</string>
 
     <!--Operations-->
     <string name="operation">Operations</string>
@@ -67,6 +67,17 @@
     <string name="x_c">Xc= </string>
     <string name="none">NoN</string>
     <string name="title">x m(x)</string>
+    
+    <string name="line_heming_distance">Лінійна Хемінгова відстань</string>
+    <string name="sqare_evklid_distance">Квадратична Евклідова відстань</string>
+    <string name="distance">Distance</string>
+    <string name="fuzzy_index">Fuzzy index</string>
+    <string name="fuzzy_index_line">Line Fuzzy index</string>
+    <string name="fuzzy_index_square">Square Fuzzy index</string>
+    <string name="entrophy">Entropy</string>
+    <string name="entrophy_pi">Entropy Pi</string>
+    <string name="entrophy_h">Entropy H</string>
+    <string name="number">Number</string>
 
 
 </resources>
